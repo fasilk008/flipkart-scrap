@@ -1,5 +1,7 @@
 # Flipkart Scraper
 
+Built on Laravel 7.29
+
 Fetch/scrap the first 100 products from Flipkart, and list the products in a simple layout. The products are paginated, and search/filter facilities are available in the UI. The Product price is shown in Cryptocurrency & INR format.
 Trigger a notification in case of price change to email
 address configured in the backend

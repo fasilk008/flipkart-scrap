@@ -9,43 +9,35 @@ use Mail;
 
 class HomeController extends Controller
 {
+	
 	/**
-	 * Create a new controller instance.
+	 * Show the application home page
 	 *
-	 * @return void
-	 */
-	public function __construct() {
-
-	}
-
-	/**
-	 * Show the application dashboard.
-	 *
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
 	 */
 	public function index() {
 
 		// get currency exchange rate
-		$convRate = 3597846.35310000; // set 1 as default value
-		// $apiURL = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=INR&apikey=YZNKPWNW4IQYQTWC";
-		// $guzzClient = new GuzzleClient();
-		// $res = $guzzClient->request('GET', $apiURL);
-		// if ($res->getStatusCode() == 200){
-		// 	$body = $res->getBody();
-		// 	$jsonData = json_decode($body, true);
-		// 	if (array_key_exists("Realtime Currency Exchange Rate", $jsonData))
-		// 		if (array_key_exists("5. Exchange Rate", $jsonData["Realtime Currency Exchange Rate"]))
-		// 			$convRate = $jsonData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
-		// }
+		$convRate = 1; // set 1 as default value
+		$apiURL = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=INR&apikey=YZNKPWNW4IQYQTWC";
+		$guzzClient = new GuzzleClient();
+		$res = $guzzClient->request('GET', $apiURL);
+		if ($res->getStatusCode() == 200){
+			$body = $res->getBody();
+			$jsonData = json_decode($body, true);
+			if (array_key_exists("Realtime Currency Exchange Rate", $jsonData))
+				if (array_key_exists("5. Exchange Rate", $jsonData["Realtime Currency Exchange Rate"]))
+					$convRate = $jsonData["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+		}
 
 		$products = Product::all();
 		return view('index', compact("convRate", "products"));
 	}
 
 	/**
-	 * Show the application dashboard.
+	 * Scrap the content from FlipKart.
 	 *
-	 * @return \Illuminate\Http\Response
+	 * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
 	 */
 	public function scrap() {
 		// get notify email

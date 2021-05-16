@@ -19,7 +19,7 @@ address configured in the backend
 4. cp .env.example .env
 ```
 
-5. Update Database & Email configurations in .env file. Also update NOTIFICATION_EMAIL value in .env (Price update email will be sent to this address)
+5. Update Database & Email configurations in .env file. Also update NOTIFICATION_EMAIL value in .env (Price update email will be sent to this address, if set)
 
 ```bash
 6. php artisan key:generate
